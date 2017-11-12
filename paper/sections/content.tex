@@ -10,58 +10,202 @@
 %%
 %% Version 1.3.2, 2017-08-01
 
-\chapter{First Content Chapter}
-\label{ch:FirstContent}
+\chapter{Motivation}
+\label{ch:Motivation}
 
-%% -------------------
-%% | Example content |
-%% -------------------
-The content chapters of your thesis should of course be renamed. How many
-chapters you need to write depends on your thesis and cannot be said in general.
-
-Check out the examples theses in the SDQWiki:
-
-\url{https://sdqweb.ipd.kit.edu/wiki/Abschlussarbeit/Studienarbeit}
-
-Of course, you can split this .tex file into several files if you prefer. 
+\begin{itemize}
+	\item show Motivation of research
+	\item show current practice how done currently
+	\item outlook: desired state 
+\end{itemize}
 
 
-\section{First Section}
-\label{sec:FirstContent:FirstSection}
+\section{Worldwide LHC Computing Grid }
+\label{sec:Motivation:wlcg}
+\begin{itemize}
+	\item explain what wlcg is
+	\item which experiment? CMS
+	\item some specifications: jobs, cpus, ...
+	\item highly heterogeneous, lot of constraints, like bad connection of some datacenters
+	\item \cite{bayatian2005cms} \cite{bonacorsi2007cms} \cite{hernandez2008cms}
+\end{itemize}
 
-\dots
+\section{State of Practice}
+\label{sec:Motivation:State of Practice}
 
-\subsection{A Subsection}
-\label{sec:FirstContent:FirstSubSection}
-
-\dots
-
-\subsubsection{A Subsubsection}
-
-\section{Second Section}
-\label{sec:FirstContent:SecondSection}
-
-\dots
+\begin{itemize}
+	\item load balancing manually
+	\item operators look at monitoring data and send new jobs to  compute node (datacenter) which they think is best
+	\item heavily influenced by experience
+	\item not optimal, shown by motoring data
+	\item does not account nature of jobs (io vs compute), leading to not good utilization of the nodes
+	\item desired: full utilization of nodes by submitting the right amount of io and compute job, so that hdd and cpu are utilized
+	\item example too much io jobs: cpu are idling, wasting time
+\end{itemize}
 
 
-\chapter{Second Content Chapter}
+\section{Outlook}
+\label{sec:Motivation:Outlook}
+
+\begin{itemize}
+	\item simulate effect of different load balancing strategies and decide on these results what the best scheduling is
+	\item for that first a model of the wlcg is needed
+	\item allows on the one hand to optimize scheduling
+	\item on the other hand evaluate what happens if grid is changed, like dynamically adding Amazon nodes when price is low
+\end{itemize}
+
+
+
+\chapter{State of the Art}
 \label{ch:SecondContent}
 
-\dots
+\begin{itemize}
+	\item selection of research which related 
+	\item show where they lack and own is needed
+\end{itemize}
 
-\section{First Section}
-\label{sec:SecondContent:FirstSection}
+\section{Resource management for Infrastructure as a Service (IaaS) in cloud computing: A survey}
+\label{sec:StateOfTheArt:SurveyResouceManagement}
+\begin{itemize}
+	\item \cite{manvi2014resource}
+	\item overview about problems in IaaS
+\end{itemize}
 
-\dots
+\section{Cloud Simulators}
 
-\section{Second Section}
-\label{sec:SecondContent:SecondSection}
+\subsection{Rapid Testing of IaaS Resource Management Algorithms via Cloud Middleware Simulation}
+\begin{itemize}
+	\item How to test load balancing alorithm. Able to test algorithm directly without reimplementing them for specific simulator.
+	\item CACTOS Runtime Toolkit integrates monitoring and resource management via a variety of algorithms.
+	\item The CACTOS Prediction Toolkit: Cloud simulator with the ability to evaluate
+	resource management algorithms without modification
+	\item cloud simulators: CloudSim, GreenCloud
+	\item missing: several date centers, which are connected, local data etc.
+\end{itemize}
 
-\dots
+\subsection{A survey of mathematical models, simulation approaches and testbeds used for research in cloud computing}
+\label{sec:StateOfTheArt:SurveyClouds}
+\begin{itemize}
+	\item \cite{survey_clouds}
+	\item lot of simulations
+\end{itemize}
 
-Add additional content chapters if required by adding new .tex files in the
-\code{sections/} directory and adding an appropriate 
-\code{\textbackslash input} statement in \code{thesis.tex}. 
-%% ---------------------
-%% | / Example content |
-%% ---------------------
+\subsection{CloudSim}
+\begin{itemize}
+	\item \cite{cloud_sim}
+	\item mostly used 
+	\item lot of simulators are based on it
+\end{itemize}
+
+\subsection{CDOSim}
+\begin{itemize}
+	\item \cite{cdosim}
+	\item based on cloudsim
+	\item represent more user than provider perspective
+\end{itemize}
+
+\subsection{Emusim}
+\begin{itemize}
+	\item \cite{emusim}
+	\item Profiling based Approach to extract Workload Models
+	\item simulates behaviour of application
+\end{itemize}
+
+\subsection{Cloud Simulator for Autoscaling}
+\begin{itemize}
+	\item \cite{autoscale_cloud}
+	\item based on queueing models
+	\item allows to evaluate autoscaling algorithms
+\end{itemize}
+
+\subsection{Locality Sim: Cloud Simulator with Data Locality}
+\begin{itemize}
+	\item \cite{localitysim}
+	\item based on cloudsim
+	\item considers data-locality
+\end{itemize}
+
+\subsection{NetworkCloudSim}
+\begin{itemize}
+	\item \cite{networkcloudsim}
+	\item extends CloudSim
+	\item models network
+\end{itemize}
+
+
+\subsection{GreenCloud}
+\begin{itemize}
+	\item \cite{green_cloud}
+	\item energy-aware of severs, switches and links
+	\item energy efficiency
+	\item packet level
+\end{itemize}
+
+\subsection{MDCSim}
+\begin{itemize}
+	\item \cite{mdcsim}
+	\item multi-tier data centers
+	\item detailed implementation of each tier
+\end{itemize}
+
+\subsection{Palladio}
+\begin{itemize}
+	\item architectural templates \cite{arch}
+	\item black box resource demand \cite{blackbox}
+\end{itemize}
+
+
+\subsection{CACTOS}
+\begin{itemize}
+	\item \cite{cactos}
+	\item CACTOS Runtime Toolkit: monitoring and resource management
+	\item install cactos on servers to monitor and manage them
+	\item CACTOS Prediction Toolkit: evaluation of alternative data center
+	deployment scenarios, and resource management algorithms
+	\item uses PCM and SimuLizar
+\end{itemize}
+
+\section{Grid Simulators}
+\subsection{GridSim}
+\begin{itemize}
+	\item \cite{gridsim}
+	\item foundation for cloudsim
+	\item best developed
+\end{itemize}
+
+\subsection{OptorSim}
+\begin{itemize}
+	\item \cite{optorsim}
+	\item used to evaluate data replication strategies
+\end{itemize}
+
+\subsection{SimGrid}
+\begin{itemize}
+	\item \cite{simgrid}
+	\item framework for simulation of distributed applications in Grid platforms
+\end{itemize}
+
+\subsection{DGSim}
+\begin{itemize}
+	\item \cite{dgsim}
+	\item trace based
+	\item automatizes the simulation process
+	\item generating realistic grid systems and workloads
+\end{itemize}
+
+\subsection{ChicagoSim}
+\begin{itemize}
+	\item \cite{chicagosim}
+	\item Data Grids
+	\item respects data locality
+\end{itemize}
+
+
+\subsection{Differences Grid and Cloud}
+\begin{itemize}
+	\item \cite{compare_grid_cloud}
+	\item cloud virtualized resources
+	\item our case rather grid
+\end{itemize}
+
+
