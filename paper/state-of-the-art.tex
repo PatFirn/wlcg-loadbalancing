@@ -14,7 +14,22 @@
 %% Available languages: english, ngerman
 %% Available modes: draft, final (see README)
 \documentclass[oneside, english]{sdqthesis}
+\usepackage{amssymb}% http://ctan.org/pkg/amssymb
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\newcommand{\qmark}{ \textbf{?}}%
+\usepackage[section]{placeins}
+\usepackage{pgfplots}
+\usepackage{booktabs}
+\usepackage{multirow}
 
+\newcolumntype{R}[2]{%
+	>{\adjustbox{angle=#1,lap=\width-(#2)}\bgroup}%
+	l%
+	<{\egroup}%
+}
+\newcommand*\rot{\rotatebox{90}}
 %% ---------------------------------
 %% | Information about the thesis  |
 %% ---------------------------------
