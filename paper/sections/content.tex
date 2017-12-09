@@ -26,7 +26,7 @@ and with its help the \textit{Higgs boson} was discovered in 2012 \cite{wlcg_onl
 
 170 computing centres distributed in 42 countries are part of the WLCG and it combines 72.000 CPUs, 386 Petabytes online data space and 368 Petabytes nearline space (tape storage) \cite{wlcg_data}. Every day it runs 2 million jobs to analyse data of the CERN experiments.
 
-At CERN there are four experiments, namely: Atlas, Alice, CMS, LHCB. They all use the grid in a similar way, but not entire the same \cite{wlcg_computing}. \Cref{fig:wlcg} shows the hierarchical three tier structure of the WLCG. Tier 0 is the CERN compute centre, which stores all raw data of the experiments, makes the first pass reconstruction and distributes raw data to Tier 1 compute centres. Tier 1 consists of 13 sites, which store a share of raw and reconstructed data. Tier 2 sites, which are mostly located at universities or other scientific institutes, do monte carlo production. In contrast to Tier 1 sites, the Tier 2 sites do not have much storage \cite{wlcg_computing}.
+At CERN there are four experiments, namely: Atlas, Alice, CMS, LHCb. They all use the grid in a similar way, but not entire the same \cite{wlcg_computing}. \Cref{fig:wlcg} shows the hierarchical three tier structure of the WLCG. Tier 0 is the CERN compute centre, which stores all raw data of the experiments, makes the first pass reconstruction and distributes raw data to Tier 1 compute centres. Tier 1 consists of 13 sites, which store a share of raw and reconstructed data, creating a second copy. They also run analysis and simulation jobs. Tier 2 sites, which are mostly located at universities or other scientific institutes, do monte carlo production. In contrast to Tier 1 sites, the Tier 2 sites do not have much storage \cite{wlcg_computing}.
 
 The WLCG is heterogeneous, meaning the resources of one site are different to the resources of another site, the network connections between sites vary, and even the nodes in a single site have different resources. It is trending to use more virtualization, resulting in even more heterogeneity \cite{wlcg_update}.
 
@@ -43,15 +43,15 @@ Our work will focus on modelling and simulating load balancing strategies for th
 \section{Current State}
 Currently, the load balancing strategy used at the \textit{CMS computing model} is improvable, e.g. it does not account the nature of the jobs: \textit{simulation jobs} require heavy I/O load and \textit{analysis jobs} require heavy CPU time \cite{1742-6596-331-7-072038}. If this nature is not accounted in the scheduling decision, it leads to a bad utilization of the nodes. A good strategy would schedule the right amount of simulation and analysis jobs to a site to maximize the utilisation of I/O and CPU. For example if too many simulation jobs are scheduled, the I/O is creating a bottleneck and the CPUs are idling. 
 
-\textit{HTCondor} is the batch system used at the WLCG and is the central configuration point for the load balancing.
+\textit{HTCondor} is the batch system used at the WLCG and is the central configuration point for the load balancing \cite{wlcg_update}.
 It does not only decide on which site a job should run, but even decides on which node, this means it has full control over the load.
 
 There are several other ideas how to improve the CMS computing model beside using a better load balancing strategy, but without a simulation it cannot be evaluated which one is the best in terms of speed-up, cost or utilization.
 \newpage
 
-\section{Outlook}
+\section{Outlook} TODO 
 The amount of data produced by the LHC is steadily increasing, thus either more computing resources have to be provided or the existing ones have to be used in a more efficient way.
-However, the computing resources will not increase in the same magnitude as the produced data, hence a better utilization of the given resources is required. Our approach will allow to simulate the effects of different load balancing strategies and decide on these results what the best strategy is. The scheduling problem itself is np complete, so the optimal solution will not be found, but we can decide on a set of strategies which one is the best \cite{1698650}.
+However, the computing resources will not increase in the same magnitude as the produced data, hence a better utilization of the given resources is required. Our approach will allow to simulate the effects of different load balancing strategies and decide on these results what the best strategy is. The scheduling problem itself is np complete, so the optimal solution will not be found, but we can decide on a set of strategies which one is the best \cite{1698650}. Evaluating load balancing strategies using the productive system is not accurate, because the workload constantly changes, which makes the performance results of different load balancing strategies incomparable. This problem will be solved by using simulations.
 
 Furthermore, our approach can be used to evaluate the effects of changing the infrastructure of the grid. Therefore, we can find the best approach to improve the CMS computing model, e.g. adding cache, create a new network connection or allow dynamic appearing nodes.
 It is difficult to find the best approach without using a simulation, because one cannot consider all side-effects of a change. For example increasing the CPU resources may be a bad decision, because then the network would become the bottleneck and only the increasing of both, the network and the CPU resources would lead to an improvement.
@@ -74,7 +74,7 @@ Finally, the usage model describes how a system is used regarding workload, user
 
 As soon as these models are created, Palladio can be used to simulate the system, choosing one of several supported simulators. \Cref{fig:palladio} shows the whole modelling and simulation process. 
 
-Lehrig and Becker \cite{arch} extended Palladio with the \textit{architectual templates} to make it possible to model cloud computing environments efficiently.
+Lehrig and Becker \cite{arch} extended Palladio with the \textit{Architectual Templates} to make it possible to model cloud computing environments efficiently.
 
 Palladio's simulation approach \textit{SimuLizar} was created to simulate self-adaptive systems \cite{becker2013simulizar}.
 It was later extended to support the metrics scalability, elasticity, and efficiency \cite{arch}.
