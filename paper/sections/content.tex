@@ -12,7 +12,7 @@
 
 \chapter{Motivation}
 The \textit{Worldwide LHC Computing Grid (WLCG)} is one of the largest grids in the world and processes the data created by the \textit{Large Hadron Collider (LHC)} at CERN \cite{wlcg_update}. 
-The created data size steadily increases and reaches 50 Petabytes 2017, thus the grid has to be constantly extended and made more efficient to be able to analyse all data.
+The created data size steadily increases and reaches 50 Petabytes 2017, thus the grid has to be constantly extended and optimised to be able to analyse all data.
 
 However, there is no model or simulation existing to evaluate the load balancing strategies of the grid,
 helping the operators to make the correct decisions in the optimization process.
@@ -26,7 +26,7 @@ and with its help the \textit{Higgs boson} was discovered in 2012 \cite{wlcg_onl
 
 170 computing centres distributed in 42 countries are part of the WLCG and it combines 72.000 CPUs, 386 Petabytes online data space and 368 Petabytes nearline space (tape storage) \cite{wlcg_data}. Every day it runs 2 million jobs to analyse data of the CERN experiments.
 
-At CERN there are four experiments, namely: Atlas, Alice, CMS, LHCb. They all use the grid in a similar way, but not completely the same way \cite{wlcg_computing}. \Cref{fig:wlcg} shows the hierarchical three tier structure of the WLCG. Tier 0 is the CERN compute centre, which stores all raw data of the experiments, makes the first pass reconstruction and distributes raw data to Tier 1 compute centres. Tier 1 consists of 13 sites, which store a share of raw and reconstructed data, creating a second copy. They also run analysis and simulation jobs. Tier 2 sites, which are mostly located at universities or other scientific institutes, do monte carlo production. In contrast to Tier 1 sites, the Tier 2 sites do not have much storage \cite{wlcg_computing}.
+At CERN there are four experiments, namely: Atlas, Alice, CMS, LHCb. They all use the grid in a similar, but not the same way \cite{wlcg_computing}. \Cref{fig:wlcg} shows the hierarchical three tier structure of the WLCG. Tier 0 is the CERN compute centre, which stores all raw data of the experiments, makes the first pass reconstruction and distributes raw data to Tier 1 compute centres. Tier 1 consists of 13 sites, which store a share of raw and reconstructed data, creating a second copy. They also run analysis and simulation jobs. Tier 2 sites, which are mostly located at universities or other scientific institutes, do monte carlo production. In contrast to Tier 1 sites, the Tier 2 sites do not have much storage \cite{wlcg_computing}.
 
 The WLCG is heterogeneous, meaning the resources of one site are different to the resources of another site, the network connections between sites vary, and even the nodes in a single site have different resources. It is trending to use more virtualization, resulting in even more heterogeneity \cite{wlcg_update}.
 
@@ -41,9 +41,9 @@ Our work will focus on modelling and simulating load balancing strategies for th
 	
 
 \section{Current State}
-Currently, the load balancing strategy used at the \textit{CMS computing model} is improvable, e.g. it does not account the nature of the jobs: \textit{simulation jobs} require heavy I/O load and \textit{analysis jobs} require heavy CPU time \cite{1742-6596-331-7-072038}. If this nature is not accounted in the scheduling decision, it leads to a bad utilization of the nodes. A good strategy would schedule the right amount of simulation and analysis jobs to a site to maximize the utilisation of I/O and CPU. For example if too many simulation jobs are scheduled, the I/O is creating a bottleneck and the CPUs are idling. 
+Currently, the load balancing strategy used at the \textit{CMS computing model} is improvable, e.g. it does not account the nature of the jobs: \textit{simulation jobs} require heavy I/O load and \textit{analysis jobs} require heavy CPU time \cite{1742-6596-331-7-072038}. If this nature is not accounted in the scheduling decision, it leads to a bad utilization of the nodes. A good strategy would schedule the right amount of simulation and analysis jobs to a site to maximize the utilisation of I/O and CPU. For example, if too many simulation jobs are scheduled, the I/O is creating a bottleneck and the CPUs are idling. 
 
-\textit{HTCondor} is the batch system used at the WLCG and is the central configuration point for the load balancing \cite{wlcg_update}.
+\textit{HTCondor} is the batch system used at the WLCG and is the central configuration point for load balancing \cite{wlcg_update}.
 It does not only decide on which site a job should run, but also on which node, this means it has full control over the load.
 
 There are several other ideas how to improve the CMS computing model beside using a better load balancing strategy, but without a simulation it cannot be evaluated which one is the best in terms of speed-up, cost or utilization.
@@ -54,7 +54,7 @@ The amount of data produced by the LHC is steadily increasing, thus either more 
 However, the computing resources will not increase in the same magnitude as the produced data, hence a better utilization of the given resources is required. Our approach will allow to simulate the effects of different load balancing strategies and decide on these results what the best strategy is. The scheduling problem itself is np complete, so the optimal solution will not be found, but we can decide on a set of strategies which one is the best \cite{1698650}. Evaluating load balancing strategies using the productive system is not accurate, because the workload constantly changes, which makes the performance results of different load balancing strategies incomparable. This problem will be solved by using simulations.
 
 Furthermore, our approach can be used to evaluate the effects of changing the infrastructure of the grid. Therefore, we can find the best approach to improve the CMS computing model, e.g. adding cache, create a new network connection or allow dynamic appearing nodes.
-It is difficult to find the best approach without using a simulation, because one cannot consider all side-effects of a change. For example increasing the CPU resources may be a bad decision, because then the network would become the bottleneck and only the increasing of both, the network and the CPU resources would lead to an improvement.
+It is difficult to find the best approach without using a simulation, because one cannot consider all side-effects of a change. For example increasing the CPU resources may be a bad decision, because then the network would become the bottleneck and only the increasing of both, the network and the CPU resources, would lead to an improvement.
 
 \chapter {Foundations}
 In this chapter the \textit{Palladio simulator} is described, which is intended to be used as the tool to model and simulate the load balancing strategies for the CMS computing model.
@@ -69,17 +69,17 @@ These models are the component model, the assembly model, the resource model, th
 The component model specifies the structure and behaviour of the components independently from their later usage. This allows reuse of the components,  but requires its parametrization.
 To represent how the components are connected to model the software architecture the assembly model has to be created. 
 The resource model describes the resource environment, including the number and characteristics of the resource containers on which the components could be deployed and the topology of the network connecting these containers.
-Allocation models describe how the different components are mapped to the resource containers.
-Finally, the usage model describes depicts a system is used regarding workload, user behaviour, and parameters.
+Allocation models represent the mapping of the different components to the resource containers.
+Finally, the usage model defines how a system is used regarding workload, user behaviour, and parameters.
 
-Once these models are created, Palladio can be used to simulate the system, choosing one of several supported simulators. \Cref{fig:palladio} shows the whole modelling and simulation process. 
+Once these models are created, Palladio can be used to simulate the system choosing one of several supported simulators. \Cref{fig:palladio} shows the modelling and simulation process. 
 
 Lehrig and Becker \cite{arch} extended Palladio with the \textit{Architectual Templates} to make it possible to model cloud computing environments efficiently.
 
 Furthermore, Palladio's simulation approach \textit{SimuLizar} was created to simulate self-adaptive systems \cite{becker2013simulizar}.
 It was later extended to support the metrics scalability, elasticity, and efficiency \cite{arch}.
 
-The first case studies using Palladio in cloud environments show that the results are accuracy \cite{arch}. However, Palladio was never used to model and simulate such a large system as the CMS computing model.
+The first case studies using Palladio in cloud environments show that it delivers accurate results \cite{arch}. However, Palladio was never used to model and simulate such a large system as the CMS computing model.
 
 \begin{figure}
 	\centering
@@ -92,13 +92,13 @@ The first case studies using Palladio in cloud environments show that the result
 
 \section{Compare Grid and Cloud Computing}
 \label{grid_cloud}
-Grid computing are distributed systems working together to solve a problem. 
-Cloud computing is a large-scale distributed computing paradigm that is driven by economies of scale.
-Both have a lot in common, because cloud computing evolved from grid computing, they are scalable, and involve multi tenancy \cite{foster2008cloud}.
+\textit{Grid computing} are distributed systems working together to solve a problem \cite{mollamotalebi2013grid}.
+\textit{Cloud computing} is a large-scale distributed computing paradigm that is driven by economies of scale \cite{foster2008cloud}.
+Both have a lot in common, because cloud computing evolved from grid computing, they are scalable and involve multi tenancy \cite{foster2008cloud}.
 However, there are also some important differences.
 
 Some of the key aspects are: \textit{Resource pooling}, \textit{on-demand resource provisioning}, and \textit{elasticity} \cite{foster2008cloud}.
-Firstly, cloud-computing uses massively virtualization, this means that assigning application models to computing nodes do not model the abstraction correctly \cite{cloud_sim}. Instead the resources are pooled and different physical and virtual resources are dynamically assigned and reassigned depending to consumer demand, which makes auto scaling of applications possible \cite{foster2008cloud}.
+Firstly, cloud computing uses massively virtualization, this means that assigning application models to computing nodes do not model the abstraction correctly \cite{cloud_sim}. Instead the resources are pooled and different physical and virtual resources are dynamically assigned and reassigned depending to consumer demand, which makes auto scaling of applications possible \cite{foster2008cloud}.
 Secondly, cloud computing allows on-demand resource provisioning \cite{foster2008cloud}. Furthermore, clouds are elastic, they scale up or down according to the currently required resources.
 
 From these aspects it follows, that the CMS computing model is rather a grid than a cloud, because it does not do resource pooling, does not allow on-demand resource provision, and is not elastic.
@@ -118,13 +118,13 @@ Grid simulators exist since the late 1990s, but the most ones have been created 
 \label{simgrid}
 \textit{SimGrid} is a framework for simulating large-scale distributed systems and one of the earliest created grid simulators \cite{simgrid_update}. Its first release was 1998 and is one of the few that is still developed today. Originally, it started as a grid simulator, but became more versatile, so that it can be used as a grid, P2P, MPI, or cloud simulator today. Moreover, it is one of the most used grid simulators \cite{simgrid_update}.
 
-In SimGrid the platforms and the deployment are defined in XML, and the application behaviour and scheduling is implemented using C. It supports simulation of CPU, I/O, and network resources, heterogeneous workloads and heterogeneous platforms \cite{simgrid_update}.
+In SimGrid the platforms and the deployment are defined in XML, and the application behaviour and scheduling is implemented using C. It supports simulation of CPU, I/O and network resources, heterogeneous workloads, and heterogeneous platforms \cite{simgrid_update}.
 
 It is more scalable than \textit{GridSim}, which is another popular grid simulator \cite{simgrid_update}.
 \Cref{diag} shows the simulation times of SimGrid and GridSim for 2000 nodes and increasing tasks.
 SimGrid performs significantly better that GridSim, because GridSim's simulation time increases quadratic with the number of tasks, while SimGrid's increases linear. At 500.000 tasks GridSim requires more than one hour and 4.4 GiB of memory to simulate, while SimGrid needs less than 14 seconds and with only 165 MiB of memory.
 
-This performance difference is created by a lot of optimizations, including implementing light-weight execution contexts, using lazy activity updates, and using trace integration for resource management \cite{simgrid_update}.
+This performance difference is created by several optimizations, including implementing light-weight execution contexts, using lazy activity updates, and using trace integration for resource management \cite{simgrid_update}.
 \newpage
 
 \begin{figure}
@@ -149,50 +149,50 @@ legend entries={SimGrid, GridSim},]
 \label{gridsim}
 
 \textit{GridSim} was created 2001 at the University of Melbourne and was a popular simulator used by other members of the community until its development stopped 2010.
-It is focused on evaluating scheduling and resource brokering and supports simulation of CPU, I/O, and network resources, heterogeneous workloads and heterogeneous platforms \cite{gridsim}. GridSim is implemented in Java, using SimJava's discrete event simulation \cite{gridsim}.
+It is focused on evaluating scheduling and resource brokering and supports simulation of CPU, I/O and network resources, heterogeneous workloads, and heterogeneous platforms \cite{gridsim}. GridSim is implemented in Java using SimJava's discrete event simulation \cite{gridsim}.
 Sulistio et al. \cite{sulistio2008toolkit} extended GridSim to make more realistic results regarding moving or the storage of data, which the original version struggled with \cite{1698650}. Furthermore, they implemented the simulation of locality of data, to be able to evaluate data replication strategies using GridSim.
 
-However, as in \cref{simgrid} mentioned, GridSim does not scale very well.
+However, as mentioned in \cref{simgrid}, GridSim does not scale very well.
 
 \subsection{GangSim}
 
 \textit{GangSim} derived from an enhancement of the \textit{Ganglia Monitoring Toolkit} in 2005 \cite{dumitrescu2005gangsim}, but was not further developed after its initial release.
-It is used to handle usage constraints for sites and virtual organizations. It evaluates allocation of individual resources from the interactions between allocation policies across virtual organisations \cite{dumitrescu2005gangsim}.
+It is used to handle usage constraints for sites and virtual organizations. GangSim evaluates allocation of individual resources from the interactions between allocation policies across virtual organisations \cite{dumitrescu2005gangsim}.
 
 It supports simulation of CPU, I/O and network resources, heterogeneous workloads, and heterogeneous platforms \cite{dumitrescu2005gangsim}.
 
-In difference to most other simulators, it is a discrete time-stepped simulator \cite{dgsim}. This means it will simulate every time slice, even if there is no activity in it. This results in a worse performance and scalability than most discrete event simulators.
+In difference to most other simulators, it is a discrete time-stepped simulator \cite{dgsim}. This means that it simulates every time slice, even if there is no activity in it. This results in a worse performance and scalability than most discrete event simulators.
 
 
 \newpage
 \subsection{OptorSim}
 \textit{OptorSim} was created 2003 as part of the European Data Grid project and is used to evaluate data replication strategies in grids \cite{optorsim}. It simulates the time needed to copy or access the required files for each job and simulates the replication of files according to a given strategy.
 
-It is not developed any more and does not consider job scheduling optimization. Because of its little scope of only evaluating data replication strategies, it does not support the simulation of CPU and I/O resources, or heterogeneous platforms \cite{optorsim}.
+OptorSim is not developed any more and does not consider job scheduling optimization. Because of its little scope of only evaluating data replication strategies, it does not support the simulation of CPU and I/O resources, or heterogeneous platforms \cite{optorsim}.
 
 
 \subsection{DGSim}
 To improve simulation environments the \textit{DGSim framework} focuses on automating and optimizing the overall simulation process \cite{dgsim}. It helps setting up the experiment by generating realistically grids, grid dynamics and evolution events. Another point is that it either generates realistic grid workloads or uses traces of existing ones. Moreover, it enables grouped or batches of simulations \cite{dgsim}.
 
-It was created in 2007 at Delft University of Technology, and is not public available, thus nobody else beside the authors could use it.
+DGSim was created in 2007 at Delft University of Technology, and is not public available, thus nobody else beside the authors could use it.
 
 
 \subsection{ChicagoSim}
-Data locality is a important aspect in grid computing, thus \textit{ChicagoSim} was created in 2003 to evaluate different scheduling and data replication algorithms \cite{chicagosim}. In contrast to OptorSim, ChicagoSim does not only evaluate data replication algorithms, but also scheduling algorithms. 
-One of the insights gained using ChicagoSim is that scheduling jobs to sites containing the data and simultaneously replicating popular data-sets to other sites is a good solution and performs better than scheduling jobs to idle sites and moving the data to them.
+Data locality is an important aspect in grid computing, thus \textit{ChicagoSim} was created in 2003 to evaluate different scheduling and data replication algorithms \cite{chicagosim}. In contrast to OptorSim, ChicagoSim does not only evaluate data replication algorithms, but also scheduling algorithms. 
+One of the insights gained is that scheduling jobs to sites containing the data and simultaneously replicating popular data-sets to other sites is a good solution and performs better than scheduling jobs to idle sites and moving the data to them.
 
-ChicagoSim was not further developed and does not support simulating CPU or I/O resources, instead simple constant waiting times are used, without any concurrence of the underlying resources \cite{chicagosim}. 
+ChicagoSim was not further developed and does not support simulating CPU or I/O resources, instead simple constant waiting times are used without any concurrence of the underlying resources \cite{chicagosim}. 
 
 
 \newpage
 \section{Cloud Simulators}
-In the recent years the research focus migrated from grid to cloud simulators, because grid simulators cannot sufficiently model the cloud infrastructure \cite{compare_grid_cloud}. Although, as in \cref{grid_cloud} shown, the CMS computing model is a grid and therefore a grid simulator is more suitable that an cloud simulator, it is useful to know about the latest developments in cloud simulators. 
+In the recent years the research focus migrated from grid to cloud simulators, because clouds are more commonly used and grid simulators cannot sufficiently model the cloud infrastructure \cite{compare_grid_cloud}. Although, as in \cref{grid_cloud} shown, the CMS computing model is a grid and therefore a grid simulator is more suitable that an cloud simulator, it is useful to know about the latest developments in cloud simulators. 
 
 Hence, this sections presents a brief overview about the most common cloud simulators.
 
 \subsection{CloudSim}
 \textit{CloudSim} was created 2010 at the University of Melbourne as part of the cloudbus project and is the most popular and sophisticated cloud simulator \cite{compare_grid_cloud}. It is based on GridSim and is a foundation for a lot of other cloud simulators.
-It shows a good scalability, simulating 100.000 machines in less than 5 minutes, requiring only 75 MB of RAM \cite{survey_clouds}. It supports both system and behaviour modelling of cloud system components such as data centres, virtual machines and resource provisioning policies.
+It shows a good scalability, simulating 100.000 machines in less than 5 minutes, requiring only 75 MB of RAM \cite{survey_clouds}. CloudSim supports both system and behaviour modelling of cloud system components such as data centres, virtual machines and resource provisioning policies.
 
 It was later extended with a network simulation component to evaluate applications that communicate with each other \cite{networkcloudsim}.
 
@@ -209,11 +209,11 @@ at the University of Luxembourg and focuses specifically on the measurement of e
 However, it assumes that every server only has a single core and virtualization, storage area networks, and resource management are not considered. Therefore, the correctness of evaluating the trade-off between performance and energy consumption are questionable \cite{survey_clouds}.
 
 \subsection{Cloud Autoscaling Simulation}
-Researchers at the Czech Technical University tried to evaluate predictive autoscaler, but found out that CloudSim had accuracy and speed issues \cite{autoscale_cloud}. Thus, they implemented a new simulation method based on \textit{queueing models}, delivering realistic results. 
+Researchers at the Czech Technical University tried to evaluate predictive autoscaler using CloudSim, but found out that CloudSim had accuracy and speed issues \cite{autoscale_cloud}. Thus, they implemented a new simulation method based on \textit{queueing models}, delivering realistic results. 
 
 One of their results was that autscaling is very stable and cost-efficient if a strategy is used that scales up based on latency and scales down based on utilization. 
 
-\section{MONARC Project}
+\section{MONARC}
 The \textit{MONARC project} was started 1998 to help with the initial design of the WLCG at CERN \cite{monarc2000models}.
 To simulate possible structures of the WLCG they created the \textit{MONARC simulator}.
 The results of the simulations indicated that a hierarchical structure with regional centres performs best, resulting in the 3 Tier structure of the WLCG today \cite{morita2001validation}. 
@@ -226,7 +226,7 @@ However, the project was not continued in 2000.
 
 \section{CACTOS}
 \textit{CACTOS} is an approach to cloud infrastructure automation and optimization, started in 2014 as a project funded by the European Union \cite{cactos}.
-One part of the approach is the \textit{CACTOS Runtime Toolkit} for monitoring and resource management and an other part is the \textit{CACTOS Prediction Toolkit} for evaluation of alternative data centre deployment scenarios and resource management algorithms.
+One part of the approach is the \textit{CACTOS Runtime Toolkit} for monitoring and resource management and another part is the \textit{CACTOS Prediction Toolkit} for evaluation of alternative data centre deployment scenarios and resource management algorithms.
 
 The Prediction Toolkit is built on Palladio and SimuLizar, see \cref{palladio} for details on Palladio.
 The models used by the Prediction Toolkit regarding resources or application behaviour are updated using monitoring data to handle the highly dynamic behaviour of clouds.
@@ -238,7 +238,7 @@ First case studies show that the Prediction Toolkit has a high accuracy, but it 
 
 \chapter{Discussion}
 \label{dis}
-In \cref{state} several grid and cloud simulators have been presented. Grid simulators fit our needs better for modelling and simulating the CMS computing model, see \cref{grid_cloud} for the differences of grid and cloud computing. Although it may be possible to use a cloud simulator, the additional functionalities to simulate clouds may create an overhead, affecting performance and comprehensibility of the simulation due to the required workarounds. Nevertheless, it seems that CloudSim is the most evolved cloud simulator.
+In \cref{state} several grid and cloud simulators have been presented. Grid simulators fit our needs for modelling and simulating the CMS computing model better, see \cref{grid_cloud} for the differences of grid and cloud computing. Although it may be possible to use a cloud simulator, the additional functionalities to simulate clouds may create an overhead, affecting performance and comprehensibility of the simulation due to the required workarounds. Nevertheless, it seems that CloudSim is the most evolved cloud simulator.
 
 \Cref{compare} compares the presented grid simulators based on our requirements. As one can see only SimGrid and Palladio do fulfil them, but it is not clear if Palladio is as scalable as required. Though, Palladio and SimuLizar are made ready for the cloud as part of the CACTOS project, so we expect that it will fulfil our scalability requirement. All other simulators are either not developed any more or have never been intended to be used as a general grid simulator, instead they only have been created for the research of a small scope in grid computing. Most simulators support the simulation of CPU, I/O, and network resources. Also heterogeneous platforms and tasks are mostly supported.
 
@@ -286,10 +286,10 @@ Furthermore, it was shown that neither the CMS computing experiment nor any othe
 
 \chapter{Outlook}
 The first step will be to use Palladio to model and simulate the Tier 1 centre \textit{GridKA} of the CMS computing model. 
-To achieve that, performance logs have to be analysed to find out the different types of executed jobs, 
+To achieve this, performance logs have to be analysed to find out the different types of executed jobs, 
 their frequency and resource requirements. Also, the resources of GridKA have to be determined.
 Once the model is created and calibrated with the measured performance values, the simulation can be executed and the results can be validated.
-At this point load balancing strategies of a single site could be simulated, adapting the workload of the site according to the expected effects of changing the global load balancing strategy.
+At this point load balancing strategies of a single site could be simulated by adapting the workload of the site according to the expected effects of changing the global load balancing strategy.
 
 The model of GridKA is then used as the foundation to model the whole CMS computing model. Finally, the load balancing of the CMS computing model can be simulated with all side effects between the sites.
 
