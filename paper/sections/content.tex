@@ -49,7 +49,7 @@ It does not only decide on which site a job should run, but also on which node, 
 There are several other ideas how to improve the CMS computing model beside using a better load balancing strategy, but without a simulation it cannot be evaluated which one is the best in terms of speed-up, cost or utilization.
 \newpage
 
-\section{Outlook} TODO 
+\section{Envisioned Solution} 
 The amount of data produced by the LHC is steadily increasing, thus either more computing resources have to be provided or the existing ones have to be used in a more efficient way.
 However, the computing resources will not increase in the same magnitude as the produced data, hence a better utilization of the given resources is required. Our approach will allow to simulate the effects of different load balancing strategies and decide on these results what the best strategy is. The scheduling problem itself is np complete, so the optimal solution will not be found, but we can decide on a set of strategies which one is the best \cite{1698650}. Evaluating load balancing strategies using the productive system is not accurate, because the workload constantly changes, which makes the performance results of different load balancing strategies incomparable. This problem will be solved by using simulations.
 
@@ -192,7 +192,10 @@ Hence, this sections presents a brief overview about the most common cloud simul
 
 \subsection{CloudSim}
 \textit{CloudSim} was created 2010 at the University of Melbourne as part of the cloudbus project and is the most popular and sophisticated cloud simulator \cite{compare_grid_cloud}. It is based on GridSim and is a foundation for a lot of other cloud simulators.
-It shows a good scalability, simulating 100.000 machines in less than 5 minutes, requiring only 75 MB of RAM \cite{survey_clouds}. CloudSim supports both system and behaviour modelling of cloud system components such as data centres, virtual machines and resource provisioning policies.
+It shows a good scalability, because its able to simulate 10.000 machines \cite{cloud_sim}. Though, this experiment did only create 50 VMs resulting in only 50 machines of the 10.000 being used to process the submitted tasks. 
+This and the fact that the results have not been validated against measured data makes the scalability questionable.
+
+CloudSim supports both system and behaviour modelling of cloud system components such as data centres, virtual machines and resource provisioning policies.
 
 It was later extended with a network simulation component to evaluate applications that communicate with each other \cite{networkcloudsim}.
 
@@ -242,15 +245,17 @@ In \cref{state} several grid and cloud simulators have been presented. Grid simu
 
 \Cref{compare} compares the presented grid simulators based on our requirements. As one can see only SimGrid and Palladio do fulfil them, but it is not clear if Palladio is as scalable as required. Though, Palladio and SimuLizar are made ready for the cloud as part of the CACTOS project, so we expect that it will fulfil our scalability requirement. All other simulators are either not developed any more or have never been intended to be used as a general grid simulator, instead they only have been created for the research of a small scope in grid computing. Most simulators support the simulation of CPU, I/O, and network resources. Also heterogeneous platforms and tasks are mostly supported.
 
-As mentioned in \cref{state}, GridSim, OptorSim, ChicagoSim, and LocalitySim are the only simulators that consider data locality. However, this feature is not required for simulating load balancing strategies, because we only need to simulate the effects of a data replication strategy, e.g. reduce the data miss rate by 30\%. The data locality feature is needed to evaluate better data replication strategies. 
+As mentioned in \cref{state}, GridSim, OptorSim, ChicagoSim, and LocalitySim are the only simulators that consider data locality. However, this feature is not required for simulating load balancing strategies, because we only need to simulate the effects of a data replication strategy, e.g. reduce the data miss rate by 30\%. The data locality feature is needed to evaluate better data replication strategies.
+
+Another use case which requires data locality is to use the simulation to evaluate concrete load balancing decisions instead of evaluating load balancing strategies. E.g. compare if a job should be submitted to Site A or B when Site A contains the required data. However, comparing concrete load balancing decisions using the simulation is out of scope and should be done in future work.
 
 There was no indication that a similar large grid or cloud as the CMS computing grid was simulated yet, so our work will evaluate if the existing tools make it possible to simulate such large systems.
 
-
+\newpage
 \begin{center}
 \captionof{table}{Comparison of Grid Simulators} 
 \label{compare}
-\scalebox{0.8}{
+\scalebox{1}{
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
 	\hline
 	\rot{Simulator} & \rot{Active Project} & \rot{General usable} & \rot{Job Scheduling} & \rot{CPU} & \rot{I/O} & \rot{Network} & \rot{Heterogeneous Platforms  } & \rot{Heterogeneous Tasks} & \rot{Scalable} \\
@@ -278,13 +283,13 @@ There was no indication that a similar large grid or cloud as the CMS computing 
 
 \chapter{Conclusion}
 
-It was shown that Palladio is a decent choice for modelling and simulating  the load balancing strategies of the CMS experiment. Another good candidate is SimGrid. However, if it shows up that Palladio is not scalable enough, model-to-model TODO transformations can be used to transform Palladio models to SimGrid models and use SimGrid to simulate the load balancing strategies. Also, we keep CloudSim in mind, because it is the most sophisticated cloud simulator.
+It was shown that Palladio is a decent choice for modelling and simulating  the load balancing strategies of the CMS experiment. Another good candidate is SimGrid. However, if it shows up that Palladio is not scalable enough, model-to-text  transformations can be used to transform Palladio models to SimGrid input files and use SimGrid to simulate the load balancing strategies. Also, we keep CloudSim in mind, because it is the most sophisticated cloud simulator.
 
 Another insight gained is that the need for a simulation to optimize the WLCG was already present in the early 2000s. Nevertheless, the MONARC project did not continue its work, so no simulation is existing yet. 
 
 Furthermore, it was shown that neither the CMS computing experiment nor any other similar large grid or cloud system was simulated yet. Our work will create a model and a simulation magnitudes larger than the existing ones and will show if the simulators of today can be used to accurately model such large systems.
 
-\chapter{Outlook}
+\chapter{Next Steps}
 The first step will be to use Palladio to model and simulate the Tier 1 centre \textit{GridKA} of the CMS computing model. 
 To achieve this, performance logs have to be analysed to find out the different types of executed jobs, 
 their frequency and resource requirements. Also, the resources of GridKA have to be determined.
