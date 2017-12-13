@@ -26,16 +26,16 @@ and with its help the \textit{Higgs boson} was discovered in 2012 \cite{wlcg_onl
 
 170 computing centres distributed in 42 countries are part of the WLCG and it combines 72.000 CPUs, 386 Petabytes online data space and 368 Petabytes nearline space (tape storage) \cite{wlcg_data}. Every day it runs 2 million jobs to analyse data of the CERN experiments.
 
-At CERN there are four experiments, namely: Atlas, Alice, CMS, LHCb. They all use the grid in a similar, but not the same way \cite{wlcg_computing}. \Cref{fig:wlcg} shows the hierarchical three tier structure of the WLCG. Tier 0 is the CERN compute centre, which stores all raw data of the experiments, makes the first pass reconstruction and distributes raw data to Tier 1 compute centres. Tier 1 consists of 13 sites, which store a share of raw and reconstructed data, creating a second copy. They also run analysis and simulation jobs. Tier 2 sites, which are mostly located at universities or other scientific institutes, do monte carlo production. In contrast to Tier 1 sites, the Tier 2 sites do not have much storage \cite{wlcg_computing}.
+At CERN there are four experiments, namely: Atlas, Alice, CMS, and LHCb. They all use the grid in a similar, but not the same way \cite{wlcg_computing}. \Cref{fig:wlcg} shows the hierarchical three tier structure of the WLCG. Tier 0 is the CERN compute centre, which stores all raw data of the experiments, makes the first pass reconstruction and distributes raw data to Tier 1 compute centres. Tier 1 consists of 13 sites, which store a share of raw and reconstructed data, creating a second copy. They also run analysis and simulation jobs. Tier 2 sites, which are mostly located at universities or other scientific institutes, do monte carlo production. In contrast to Tier 1 sites, the Tier 2 sites do not have much storage \cite{wlcg_computing}.
 
 The WLCG is heterogeneous, meaning that the resources of one site are different to the resources of another site, the network connections between sites vary, and even the nodes in a single site have different resources. It is trending to use more virtualization, resulting in even more heterogeneity \cite{wlcg_update}.
 
 Our work will focus on modelling and simulating load balancing strategies for the CMS experiment. Yet the results of our work can be presumably transferred to the other experiments, because they all use the grid in a similar way.
 
-	\begin{figure}
+	\begin{figure}[t!]
 		\centering
-		\includegraphics[width=0.65\linewidth]{images/WLCG}
-		\caption[]{Tier structure of WLCG \cite{wlcg_tiers}}
+		\includegraphics[width=1.0\linewidth]{images/WLCG}
+		\caption[]{Tier structure of the WLCG \cite{wlcg_tiers}}
 		\label{fig:wlcg}
 	\end{figure}
 	
@@ -47,7 +47,7 @@ Currently, the load balancing strategy used at the \textit{CMS computing model} 
 It does not only decide on which site a job should run, but also on which node. This means it has full control over the load.
 
 There are several other ideas how to improve the CMS computing model beside using a better load balancing strategy, but without a simulation it cannot be evaluated which one is the best in terms of speed-up, cost or utilization.
-\newpage
+
 
 \section{Envisioned Solution} 
 The amount of data produced by the LHC is steadily increasing, thus either more computing resources have to be provided or the existing ones have to be used in a more efficient way.
@@ -83,7 +83,7 @@ The first case studies using Palladio in cloud environments show that it deliver
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.95\linewidth]{images/palladio}
+	\includegraphics[width=1\linewidth]{images/palladio}
 	\caption[]{Process of Palladio \cite{BECKER20093}}
 	\label{fig:palladio}
 \end{figure}
@@ -116,7 +116,7 @@ Grid simulators exist since the late 1990s, but the most ones have been created 
 
 \subsection{SimGrid}
 \label{simgrid}
-\textit{SimGrid} is a framework for simulating large-scale distributed systems and one of the earliest created grid simulators \cite{simgrid_update}. Its first release was 1998 and is one of the few that is still developed today. Originally, it started as a grid simulator, but became more versatile, so that it can be used as a grid, P2P, MPI, or cloud simulator today. Moreover, it is one of the most used grid simulators \cite{simgrid_update}.
+\textit{SimGrid} is a framework for simulating large-scale distributed systems and one of the earliest created grid simulators \cite{simgrid_update}. Its first release was 1998 and is one of the few that is still developed today. Originally, it started as a grid simulator, but it became more versatile. Therefore it can be used as a grid, P2P, MPI, or cloud simulator today. Moreover, it is one of the most used grid simulators \cite{simgrid_update}.
 
 In SimGrid the platforms and the deployment are defined in XML, and the application behaviour and scheduling is implemented using C. It supports simulation of CPU, I/O and network resources, heterogeneous workloads, and heterogeneous platforms \cite{simgrid_update}.
 
@@ -200,7 +200,7 @@ CloudSim supports both system and behaviour modelling of cloud system components
 It was later extended with a network simulation component to evaluate applications that communicate with each other \cite{networkcloudsim}.
 
 \subsection{CDOSim}
-\textit{CDOSim} was developed 2012 at Kiel University and is a simulator based on CloudSim to evaluate competing cloud deployment options (CDOs) \cite{cdosim}. It represents more the user than the provider perspective and hides fine fine-grained internals of a cloud platform. CDOSim helps to find the best ratio between high performance and low costs, by supporting the selection of a cloud provider, the mapping between service and virtual machines, and adoption strategies. 
+\textit{CDOSim} was developed 2012 at Kiel University and is a simulator based on CloudSim to evaluate competing cloud deployment options (CDOs) \cite{cdosim}. It represents more the user than the provider perspective and hides fine-grained internals of a cloud platform. CDOSim helps to find the best ratio between high performance and low costs, by supporting the selection of a cloud provider, the mapping between service and virtual machines, and adoption strategies. 
 
 \subsection{LocalitySim}
 Another simulator based on CloudSim is \textit{LocalitySim}, which was created 2016 at the University of Cairo \cite{localitysim}. Data locality affects the performance of any scheduling algorithm. If the scheduler places the job far away from its data, extra time is needed to transfer data. Therefore, LocalitySim was created, because most other cloud simulators are not supporting the locality of data.
