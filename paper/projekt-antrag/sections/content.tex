@@ -191,8 +191,8 @@ While creating the initial model several short comings of Palladio have been det
 
 This leads to the following sub goals that are described in detail in \cref{plan}: 
 \begin{itemize}
-	\item Model resource environment fine granularly: Currently it is not possible to model multiple types of resource containers. This is not accurately enough, instead each type of resource container at GridKa should have an own representation in the model.
-	\item Generate measurement points: For each resource container the measurement points to measure the resource usage should be generated. It is not practical to create these measurement points manually for about 1000 resource containers.
+	\item Model heterogeneous resource environment: Currently it is not possible to model multiple types of resource containers. This is not accurately enough, instead each type of resource container at GridKa should have an own representation in the model.
+	\item Duplicate measurement points: For each resource container the measurement points to measure the resource usage should be generated. It is not practical to create these measurement points manually for about 1000 resource containers.
 	\item Model job slot concept: Each resource container can only run a certain amount of computing jobs in parallel, this is the amount of job slots a resource container has. We need to model this concept, because it is a foundation of the load balancing algorithm.
 	\item Implement more realistically load balancing: Currently the load balancing algorithm randomly chooses the resource container. This does not reflect a realistically load balancing algorithm, therefore a load balancing algorithm based on available job slots should be implemented.
 	\item Enable replay of traces: To be able to simulate and replay real world situations, Palladio should be able to replay traces of computing jobs at GridKa. This feature enables us to make the validation more accurately.
@@ -243,7 +243,7 @@ inline]{1}{22}
 
 \ganttgroup[inline=false]{Implementation}{2}{13} \\
 
-\ganttbar[inline=false]{Fine granular Resources}{2}{2}\\
+\ganttbar[inline=false]{Heterogeneous Resources}{2}{2}\\
 \ganttbar[inline=false]{Measurement Points}{3}{4} \\
 \ganttbar[inline=false]{Job Slot Concept}{5}{6} \\
 \ganttbar[inline=false]{Accurate Load Balancing}{7}{9} \\
@@ -266,16 +266,16 @@ inline]{1}{22}
 \end{figure}
 \vspace*{\fill}
 \clearpage
-\section{Fine granular Resource Environment}
-To represent the resource environment more fine granularly, the applied Architectural Template hast to be modified.
+\section{Heterogeneous Resource Environment}
+To represent the heterogeneous resource environment more accurately, the applied Architectural Template hast to be modified.
 This template is applied to a resource container and specifies how many instances of this resource container should be generated in the completion phase.
-Currently the template can only be applied to one resource container, hence we can only model on type of resource containers. Our approach is to extend the template so it can be applied to multiple types of resource containers.
+Currently the template can only be applied to one resource container, hence we can only model one type of resource containers. Our approach is to extend the template so it can be applied to multiple types of resource containers.
 
 The result of this subtask is that each type of resource container at GridKa can be modelled as a resource container in Palladio and that the Architectural Template can be applied to each of these resource containers, resulting in a more accurate simulation.
 The expected effort for this subtask is about one week.
 
-\section{Measurement Points Generation}
-Measurement points are needed to evaluate the resource usage of each resource container. To create them automatically the Architectural Template plugin should be extended. The developer specifies the measurement points for each resource container, with the result that the measurement points for the generated resource containers should be created due the completion phase.
+\section{Measurement Points Duplication}
+Measurement points are needed to evaluate the resource usage of each resource container. To create them automatically the Architectural Template plugin should be extended. The developer specifies the measurement points for each resource container, with the result that the measurement points for the duplicated resource containers should be created due the completion phase.
 
 Without this feature the validation cannot take place, because it is not practical to manually create the measurement points for about 1000 resource containers. This feature requires about two weeks of work.
 
